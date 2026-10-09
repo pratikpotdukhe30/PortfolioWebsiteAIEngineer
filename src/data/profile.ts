@@ -9,6 +9,16 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/pratik-potdukhe/",
   cv: "", // e.g. "/Pratik_Potdukhe_CV.pdf" (put the file in /public)
   photo: "", // e.g. "/pratik.jpg" (put the file in /public)
+  role: "Software & AI Engineer",
+  location: "Milan, Italy",
+  lookingFor:
+    "an internship in AI or software engineering, ideally a curricular one connected to the master's thesis, though extracurricular internships are also an option",
+  about: [
+    "I'm a software engineer based in Milan, doing an M.Sc. in Computer Science and Engineering at Politecnico di Milano since September 2024.",
+    "From March 2022 to August 2024 I worked at Capgemini as a Software Engineer and later a Senior Analyst, building Java and Spring Boot services for the Stellantis AfterSales platform.",
+    "Now I mostly work on machine learning and LLM applications, and I'm moving toward AI engineering: LangChain, RAG and agentic systems.",
+    "I'm originally from India. I hold the Microsoft Azure AZ-900 certification and was trained in DevOps practices (Docker, Kubernetes) at Capgemini.",
+  ],
   updated: "October 2026",
 };
 
@@ -22,7 +32,7 @@ export const experience = [
   {
     where: "Capgemini",
     what: "Software Engineer, then Senior Analyst",
-    when: "Before 2024",
+    when: "Mar 2022 – Aug 2024",
     note: "Java and Spring Boot services for the Stellantis AfterSales platform.",
   },
 ];
@@ -97,9 +107,9 @@ export const now =
   "I'm currently learning how retrieval-augmented generation works by building a chatbot that answers questions about any YouTube video from its transcript.";
 
 export const skills = [
-  ["Languages", "Java, Python, TypeScript, SQL"],
-  ["Backend", "Spring Boot, FastAPI, Express, REST, Oracle, SQLite"],
-  ["Machine learning", "TensorFlow, Keras, CNNs, federated learning, LangChain"],
+  ["AI / ML", "LangChain, RAG, TensorFlow, Keras, CNNs, federated learning"],
+  ["Languages", "Python, Java, TypeScript, SQL"],
+  ["Backend", "FastAPI, Spring Boot, Express, REST, Oracle, SQLite"],
   ["Front end", "React, React Native, Angular"],
   ["Infrastructure", "Google Cloud, Azure (AZ-900), Docker, Kubernetes, Jenkins"],
 ];
