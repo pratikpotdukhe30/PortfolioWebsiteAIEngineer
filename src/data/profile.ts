@@ -1,163 +1,105 @@
-// All site content lives here. Edit this file to update the portfolio.
-// Leave a link as "" to hide its button.
+// All site content lives here. Edit this file to update the site.
+// Leave a link as "" to hide it.
 
 export const profile = {
   name: "Pratik Potdukhe",
   fullName: "Pratik Rameshwar Potdukhe",
-  role: "Software Engineer · AI Engineer",
-  location: "Milan, Italy",
   email: "pratikatpolimi@gmail.com",
   github: "https://github.com/pratikpotdukhe30",
   linkedin: "https://www.linkedin.com/in/pratik-potdukhe/",
   cv: "", // e.g. "/Pratik_Potdukhe_CV.pdf" (put the file in /public)
-  availability: "Open to software and AI engineering internships",
-  tagline: "I build Java backend systems and deployed machine learning applications.",
-  summary:
-    "Software engineer with industry experience building Java and Spring Boot services for Stellantis' after-sales platform at Capgemini. Currently pursuing an M.Sc. in Computer Science and Engineering at Politecnico di Milano, specialising in machine learning, large language models and retrieval-augmented generation.",
-  rotating: ["Java & Spring Boot services", "Deep learning models", "RAG pipelines", "Full-stack web apps"],
+  photo: "", // e.g. "/pratik.jpg" (put the file in /public)
+  updated: "October 2026",
 };
 
 export const experience = [
   {
-    org: "Politecnico di Milano",
-    title: "M.Sc. Computer Science and Engineering",
-    period: "2024 – present",
-    points: [
-      "Coursework in machine learning, numerical analysis for ML, data mining and computer security",
-      "Applied projects in computer vision, federated learning and LLM applications",
-    ],
+    where: "Politecnico di Milano",
+    what: "M.Sc. Computer Science and Engineering",
+    when: "2024 –",
+    note: "Machine learning, numerical analysis for ML, data mining, computer security.",
   },
   {
-    org: "Capgemini",
-    title: "Software Engineer → Senior Analyst",
-    period: "Industry experience",
-    points: [
-      "Developed REST APIs in Java and Spring Boot for the Stellantis AfterSales platform",
-      "Worked with Oracle databases and Jenkins-based CI on a Git workflow",
-      "Trained in DevOps practices (Docker, Kubernetes); Microsoft Azure AZ-900 certified",
-    ],
+    where: "Capgemini",
+    what: "Software Engineer, then Senior Analyst",
+    when: "Before 2024",
+    note: "Java and Spring Boot services for the Stellantis AfterSales platform.",
   },
 ];
-
-export type Category = "AI / ML" | "Full-stack" | "Backend";
 
 export type Project = {
   id: string;
   title: string;
-  context: string;
-  status: "Deployed" | "Completed" | "Production" | "In progress";
-  categories: Category[];
-  summary: string;
-  problem: string;
-  approach: string[];
-  stack: string[];
-  pipeline?: string[];
+  where: string;
+  line: string;
+  stack: string;
   repo?: string;
   demo?: string;
-  featured?: boolean;
+  body: string[];
 };
 
 export const projects: Project[] = [
   {
-    id: "potato",
-    title: "Potato Disease Classifier",
-    context: "Numerical Analysis for ML · Politecnico di Milano",
-    status: "Deployed",
-    categories: ["AI / ML", "Full-stack"],
-    featured: true,
-  summary:
-      "An end-to-end computer vision system that diagnoses potato leaf diseases from a photo, served to web and Android clients from the cloud.",
-    problem:
-      "Leaf diseases need to be identified early, and a model is only useful if it reaches people in the field. The goal was to take a CNN from training all the way to a usable product.",
-    approach: [
-      "Trained a convolutional neural network in TensorFlow/Keras on labelled leaf images",
-      "Served predictions through a FastAPI backend and Google Cloud Functions",
-      "Built a React web client and a React Native Android app for on-device photo capture",
-      "Resolved Android toolchain issues: Java 8, Gradle 6.9, jcenter deprecation and Flipper removal",
-    ],
-    stack: ["TensorFlow", "Keras", "FastAPI", "Google Cloud", "React", "React Native"],
-    pipeline: ["Leaf photo", "CNN", "FastAPI · GCP", "Web & Android"],
+    id: "potato-disease",
+    title: "Potato disease classifier",
+    where: "Course project, Numerical Analysis for Machine Learning",
+    line: "A CNN that diagnoses potato leaf disease from a photo, with a web app and an Android app on top.",
+    stack: "TensorFlow, Keras, FastAPI, Google Cloud Functions, React, React Native",
     repo: "",
-    demo: "",
+    body: [
+      "The course asked for a machine learning model. I took mine further than a notebook and built it into something you can use from a browser or an Android phone.",
+      "The model is a convolutional neural network trained in TensorFlow and Keras on labelled images of potato leaves. It takes a photo of a leaf and predicts which disease, if any, the plant has.",
+      "The model is served through a FastAPI backend and deployed on Google Cloud Functions. Two clients call it: a React web app and a React Native Android app.",
+      "Getting the Android app to build was its own problem. jcenter had been deprecated and Flipper was breaking the build, so I set the project up on Java 8 and Gradle 6.9, dealt with the jcenter dependencies and removed Flipper before it would compile.",
+    ],
   },
   {
-    id: "federated",
-    title: "Federated Sleep-Quality Prediction",
-    context: "Team Nyx · Creativity, Science and Innovation",
-    status: "Completed",
-    categories: ["AI / ML"],
-  summary:
-      "Sleep-quality prediction from Garmin wearable data using federated learning, so models train without centralising personal health data.",
-    problem:
-      "Wearable data is personal and sensitive. The challenge was to learn useful sleep-quality predictions while keeping each user's raw data on their own side.",
-    approach: [
-      "Prepared and analysed Garmin wearable data",
-      "Designed a federated training setup where only model updates are shared",
-      "Owned the project end to end, from data to model evaluation",
-    ],
-    stack: ["Python", "Federated Learning", "Wearable data"],
+    id: "federated-sleep",
+    title: "Federated sleep-quality prediction",
+    where: "Team Nyx, Creativity, Science and Innovation course",
+    line: "Predicting sleep quality from Garmin data without collecting anyone's raw data in one place.",
+    stack: "Python, federated learning, Garmin wearable data",
     repo: "",
+    body: [
+      "Sleep data from a wearable is about as personal as data gets, so the project used an approach that never collects it in one place.",
+      "We used federated learning. Each participant's data stays on their side, a model is trained locally, and only the model updates are combined into a shared model.",
+      "I worked on the project from start to finish: preparing the Garmin data, setting up the federated training, and evaluating the resulting model.",
+    ],
   },
   {
-    id: "inbox",
-    title: "Conversation Inbox",
-    context: "Technical assignment · Arcus Corp, Milan",
-    status: "Completed",
-    categories: ["Full-stack"],
-  summary:
-      "A full-stack messaging inbox with webhook ingestion, automated replies and live updates.",
-    problem:
-      "Businesses receive messages through external channels and need one place to read, track and answer them.",
-    approach: [
-      "Webhook receiver in Express that ingests and persists conversations in SQLite",
-      "Rule-based auto-reply logic for incoming messages",
-      "React interface with live polling and per-conversation unread counts",
-    ],
-    stack: ["TypeScript", "Express", "React", "SQLite"],
+    id: "conversation-inbox",
+    title: "Conversation inbox",
+    where: "Take-home assignment for Arcus Corp, Milan",
+    line: "A small full-stack app that receives messages through a webhook and lets you read and answer them.",
+    stack: "TypeScript, Express, React, SQLite",
     repo: "",
+    body: [
+      "This was a take-home assignment. The brief was an inbox for messages arriving from an external channel.",
+      "An Express server exposes a webhook endpoint. Incoming messages are stored in SQLite and grouped into conversations. Simple rules send an automatic reply to new messages.",
+      "The React front end polls the server for updates, so new messages appear without a refresh, and each conversation shows how many messages are unread.",
+    ],
   },
   {
-    id: "stellantis",
-    title: "Stellantis AfterSales Platform",
-    context: "Capgemini · Client: Stellantis",
-    status: "Production",
-    categories: ["Backend"],
-  summary:
-      "Backend services for the after-sales platform of one of the world's largest automakers.",
-    problem:
-      "A large enterprise platform serving after-sales operations needs reliable, maintainable services and a disciplined delivery process.",
-    approach: [
-      "Developed and maintained REST APIs in Java and Spring Boot",
-      "Worked against Oracle databases",
-      "Delivered through Jenkins CI and Git-based workflows",
+    id: "stellantis-aftersales",
+    title: "Stellantis AfterSales platform",
+    where: "Capgemini, client work",
+    line: "Backend services for the after-sales platform of a global carmaker.",
+    stack: "Java, Spring Boot, REST APIs, Oracle, Jenkins, Git",
+    body: [
+      "At Capgemini I worked on the AfterSales platform that Stellantis uses for its after-sales operations. I joined as a Software Engineer and later moved to Senior Analyst.",
+      "My work was on the backend: REST APIs in Java and Spring Boot on top of Oracle databases, built and delivered through Jenkins with a Git workflow.",
+      "This is client work, so there is no code or screenshot to share.",
     ],
-    stack: ["Java", "Spring Boot", "REST APIs", "Oracle", "Jenkins", "Git"],
-  },
-  {
-    id: "ytrag",
-    title: "YouTube Video Q&A Assistant",
-    context: "Independent project · LLM applications",
-    status: "In progress",
-    categories: ["AI / ML"],
-  summary:
-      "A retrieval-augmented chatbot that answers questions about any YouTube video, grounded in its transcript.",
-    problem:
-      "Long videos are hard to search. Users should be able to ask a question and get an answer backed by what was actually said.",
-    approach: [
-      "Retrieval-augmented generation pipeline over video transcripts",
-      "Built with LangChain",
-      "Planned browser plugin using the YouTube API",
-    ],
-    stack: ["Python", "LangChain", "RAG", "YouTube API"],
-    pipeline: ["Transcript", "Chunk & embed", "Retrieve", "LLM answer"],
-    repo: "",
   },
 ];
 
-export const skills: { group: string; items: string[] }[] = [
-  { group: "Languages", items: ["Java", "Python", "TypeScript", "SQL"] },
-  { group: "Backend", items: ["Spring Boot", "REST APIs", "FastAPI", "Express", "Oracle", "SQLite"] },
-  { group: "AI / ML", items: ["TensorFlow", "Keras", "CNNs", "Federated Learning", "LangChain", "RAG"] },
-  { group: "Frontend", items: ["React", "React Native", "Angular"] },
-  { group: "Cloud & DevOps", items: ["Google Cloud", "Azure (AZ-900)", "Docker", "Kubernetes", "Jenkins", "Git"] },
+export const now =
+  "I'm currently learning how retrieval-augmented generation works by building a chatbot that answers questions about any YouTube video from its transcript.";
+
+export const skills = [
+  ["Languages", "Java, Python, TypeScript, SQL"],
+  ["Backend", "Spring Boot, FastAPI, Express, REST, Oracle, SQLite"],
+  ["Machine learning", "TensorFlow, Keras, CNNs, federated learning, LangChain"],
+  ["Front end", "React, React Native, Angular"],
+  ["Infrastructure", "Google Cloud, Azure (AZ-900), Docker, Kubernetes, Jenkins"],
 ];
