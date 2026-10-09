@@ -47,7 +47,7 @@ export const projects: Project[] = [
     stack: "TensorFlow, Keras, FastAPI, Google Cloud Functions, React, React Native",
     repo: "",
     body: [
-      "The course asked for a machine learning model. I took mine further than a notebook and built it into something you can use from a browser or an Android phone.",
+      "This was my project for the Numerical Analysis for Machine Learning course. I took the model past the notebook stage and built it into something you can use from a browser or an Android phone.",
       "The model is a convolutional neural network trained in TensorFlow and Keras on labelled images of potato leaves. It takes a photo of a leaf and predicts which disease, if any, the plant has.",
       "The model is served through a FastAPI backend and deployed on Google Cloud Functions. Two clients call it: a React web app and a React Native Android app.",
       "Getting the Android app to build was its own problem. jcenter had been deprecated and Flipper was breaking the build, so I set the project up on Java 8 and Gradle 6.9, dealt with the jcenter dependencies and removed Flipper before it would compile.",

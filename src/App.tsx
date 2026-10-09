@@ -1,126 +1,121 @@
-import { useEffect } from "react";
-import { experience, now, profile, projects, skills, type Project } from "./data/profile";
+import { useEffect, type MouseEvent, type ReactNode } from "react";
+import { profile, projects, skills, type Project } from "./data/profile";
 import { go, useRoute } from "./router";
 
-function Links() {
-  const items = [
-    { href: `mailto:${profile.email}`, label: "Email" },
-    { href: profile.github, label: "GitHub" },
-    { href: profile.linkedin, label: "LinkedIn" },
-    { href: profile.cv, label: "CV" },
-  ].filter((i) => i.href);
+function L({ to, children }: { to: string; children: ReactNode }) {
+  const onClick = (e: MouseEvent) => { e.preventDefault(); go(to); };
+  return <a href={`#${to}`} onClick={onClick}>{children}</a>;
+}
+
+function Header({ route }: { route: string }) {
   return (
-    <p className="links">
-      {items.map((i) => (
-        <a key={i.label} href={i.href} target={i.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
-          {i.label}
-        </a>
-      ))}
-    </p>
+    <header className="site-header">
+      <div className="wrap head-row">
+        <L to="/">{profile.name}</L>
+        <nav>
+          <L to="/projects"><span className={route.startsWith("/projects") || projects.some((p) => route === `/${p.id}`) ? "here" : ""}>Projects</span></L>
+          {profile.cv && <a href={profile.cv} target="_blank" rel="noreferrer">CV</a>}
+          <a href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
+        </nav>
+      </div>
+    </header>
   );
 }
 
+const p = (id: string) => `/${id}`;
+
 function Home() {
-  useEffect(() => { document.title = profile.name; }, []);
+  useEffect(() => { document.title = `${profile.name} | Software engineer`; }, []);
   return (
-    <main>
-      <header className="intro">
-        {profile.photo && <img className="photo" src={profile.photo} alt={profile.name} width={88} height={88} />}
-        <h1>{profile.name}</h1>
-        <Links />
-      </header>
+    <main className="wrap">
+      {profile.photo && <img className="photo" src={profile.photo} alt="Pratik Potdukhe" />}
 
-      <section className="prose">
-        <p>
-          I'm a software engineer based in Milan. At Capgemini I worked as a Software Engineer and later a Senior
-          Analyst, building Java and Spring Boot services for the Stellantis AfterSales platform.
-        </p>
-        <p>
-          I'm now doing a master's in Computer Science and Engineering at Politecnico di Milano. Most of my recent
-          work is in machine learning, and I'm moving toward AI engineering, which for me means building
-          applications on top of language models.
-        </p>
-        <p>I'm looking for an internship in software or AI engineering.</p>
-      </section>
+      <p>
+        I'm a software engineer in Milan. I'm currently doing my master's in Computer Science and Engineering at{" "}
+        <a href="https://www.polimi.it/en" target="_blank" rel="noreferrer">Politecnico di Milano</a>, where most of
+        my work is in machine learning. I'm moving toward AI engineering, which for me means building applications
+        on top of language models.
+      </p>
+      <p>
+        Before my master's I worked at Capgemini, first as a Software Engineer and then as a Senior Analyst. I built
+        Java and Spring Boot services for the <L to={p("stellantis-aftersales")}>Stellantis AfterSales platform</L>,
+        working with Oracle databases and Jenkins pipelines.
+      </p>
+      <p>
+        At Polimi I built a <L to={p("potato-disease")}>potato disease classifier</L> that you can use from a web app
+        or an Android app, and worked with my team on <L to={p("federated-sleep")}>predicting sleep quality from
+        Garmin data with federated learning</L>. I also built a <L to={p("conversation-inbox")}>conversation
+        inbox</L> in TypeScript and React as a take-home assignment for Arcus Corp.
+      </p>
+      <p>
+        Right now I'm learning retrieval-augmented generation by building a chatbot that answers questions about
+        YouTube videos from their transcripts.
+      </p>
+      <p>
+        I'm looking for an internship in software or AI engineering, ideally one I can connect to my thesis. If you
+        think I'd be a good fit, I'd be glad to hear from you.
+      </p>
 
-      <section>
-        <h2>Projects</h2>
-        <ul className="projects">
-          {projects.map((p) => (
-            <li key={p.id}>
-              <a href={`#/${p.id}`} onClick={(e) => { e.preventDefault(); go(`/${p.id}`); }}>{p.title}</a>
-              <span className="where">{p.where}</span>
-              <p>{p.line}</p>
-            </li>
-          ))}
-        </ul>
-        <p className="now"><span>Now</span> {now}</p>
-      </section>
-
-      <section>
-        <h2>Experience</h2>
-        <dl className="rows">
-          {experience.map((e) => (
-            <div key={e.where}>
-              <dt>{e.when}</dt>
-              <dd><strong>{e.where}</strong>, {e.what}<br /><span className="muted">{e.note}</span></dd>
-            </div>
-          ))}
-        </dl>
-      </section>
-
-      <section>
-        <h2>Tools I use</h2>
-        <dl className="rows">
-          {skills.map(([k, v]) => (
-            <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
-          ))}
-        </dl>
-      </section>
-
-      <section>
-        <h2>Contact</h2>
-        <p>
-          Email is the best way to reach me: <a href={`mailto:${profile.email}`}>{profile.email}</a>.
-        </p>
-      </section>
+      <ul className="dash">
+        <li>Email: <a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+        <li>LinkedIn: <a href={profile.linkedin} target="_blank" rel="noreferrer">pratik-potdukhe</a></li>
+        <li>GitHub: <a href={profile.github} target="_blank" rel="noreferrer">pratikpotdukhe30</a></li>
+      </ul>
     </main>
   );
 }
 
-function Writeup({ p }: { p: Project }) {
-  const i = projects.findIndex((x) => x.id === p.id);
-  const next = projects[(i + 1) % projects.length];
-  useEffect(() => { document.title = `${p.title} · ${profile.name}`; window.scrollTo(0, 0); }, [p]);
+function ProjectList() {
+  useEffect(() => { document.title = `Projects | ${profile.name}`; window.scrollTo(0, 0); }, []);
   return (
-    <main>
-      <p className="back"><a href="#" onClick={(e) => { e.preventDefault(); go("/"); }}>← {profile.name}</a></p>
+    <main className="wrap">
+      <h1>Projects</h1>
+      <ul className="plist">
+        {projects.map((x) => (
+          <li key={x.id}>
+            <L to={p(x.id)}>{x.title}</L>
+            <p>{x.line}</p>
+            <p className="small">{x.where}</p>
+          </li>
+        ))}
+      </ul>
+      <h2>Things I work with</h2>
+      <ul className="dash">
+        {skills.map(([k, v]) => <li key={k}>{k}: {v}</li>)}
+      </ul>
+    </main>
+  );
+}
+
+function Writeup({ x }: { x: Project }) {
+  const i = projects.findIndex((y) => y.id === x.id);
+  const next = projects[(i + 1) % projects.length];
+  useEffect(() => { document.title = `${x.title} | ${profile.name}`; window.scrollTo(0, 0); }, [x]);
+  return (
+    <main className="wrap">
       <article>
-        <h1>{p.title}</h1>
-        <p className="meta">{p.where}</p>
-        <div className="prose">
-          {p.body.map((para) => <p key={para.slice(0, 24)}>{para}</p>)}
-        </div>
-        <dl className="rows tight">
-          <div><dt>Built with</dt><dd>{p.stack}</dd></div>
-          {p.repo && <div><dt>Code</dt><dd><a href={p.repo} target="_blank" rel="noreferrer">{p.repo.replace("https://", "")}</a></dd></div>}
-          {p.demo && <div><dt>Demo</dt><dd><a href={p.demo} target="_blank" rel="noreferrer">{p.demo.replace("https://", "")}</a></dd></div>}
-        </dl>
+        <h1>{x.title}</h1>
+        <p className="small">{x.where}</p>
+        {x.body.map((para) => <p key={para.slice(0, 32)}>{para}</p>)}
+        <ul className="dash">
+          <li>Built with: {x.stack}</li>
+          {x.repo && <li>Code: <a href={x.repo} target="_blank" rel="noreferrer">{x.repo.replace("https://", "")}</a></li>}
+          {x.demo && <li>Demo: <a href={x.demo} target="_blank" rel="noreferrer">{x.demo.replace("https://", "")}</a></li>}
+        </ul>
       </article>
-      <p className="next">
-        Next: <a href={`#/${next.id}`} onClick={(e) => { e.preventDefault(); go(`/${next.id}`); }}>{next.title}</a>
-      </p>
+      <p className="next">Next project: <L to={p(next.id)}>{next.title}</L></p>
     </main>
   );
 }
 
 export default function App() {
   const route = useRoute();
-  const project = projects.find((p) => route === `/${p.id}`);
+  const project = projects.find((x) => route === p(x.id));
   return (
-    <div className="page">
-      {project ? <Writeup p={project} /> : <Home />}
-      <footer>Last updated {profile.updated}</footer>
-    </div>
+    <>
+      <Header route={route} />
+      {project ? <Writeup x={project} /> : route === "/projects" ? <ProjectList /> : <Home />}
+      <footer className="wrap">© {new Date().getFullYear()} {profile.fullName}</footer>
+    </>
   );
 }
