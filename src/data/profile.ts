@@ -8,7 +8,7 @@ export const profile = {
   github: "https://github.com/pratikpotdukhe30",
   linkedin: "https://www.linkedin.com/in/pratik-potdukhe/",
   cv: "", // e.g. "/Pratik_Potdukhe_CV.pdf" (put the file in /public)
-  photo: "", // e.g. "/pratik.jpg" (put the file in /public)
+  photo: "pratik_profile_pic.jpg", // e.g. "/pratik.jpg" (put the file in /public)
   role: "Software & AI Engineer",
   location: "Milan, Italy",
   lookingFor:
