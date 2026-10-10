@@ -2,7 +2,7 @@
 
 My personal website, with an AI assistant that answers questions about my projects, experience and skills.
 
-**Live:** https://pratikpotdukhe.vercel.app
+**Live:** https://pratikpotdukhe30.vercel.app
 
 Instead of making visitors scroll through everything, the site lets them ask. A recruiter can type "What did he build at Capgemini?" or "Has he deployed an ML model?" and get a short answer grounded in my actual profile. Below the chat are my projects, experience and skills for anyone who prefers to read.
 
@@ -29,14 +29,14 @@ flowchart LR
 | --- | --- |
 | Front end | React 18, TypeScript, Vite |
 | Chat backend | Vercel serverless function (Node) |
-| LLM | Google Gemini (`gemini-2.5-flash` by default) |
+| LLM | OpenAI `gpt-6-luna` (Google Gemini as a fallback) |
 | Hosting | Vercel |
 
 ## Project structure
 
 ```
 api/
-  chat.ts            Serverless endpoint that calls Gemini
+  chat.ts            Serverless endpoint that calls OpenAI (or Gemini)
 src/
   App.tsx            Page layout and chat UI
   index.css          Styles (light and dark themes)
@@ -70,7 +70,7 @@ A free Gemini API key is available from [Google AI Studio](https://aistudio.goog
 ## Deploying
 
 1. Import the repository on [Vercel](https://vercel.com) and choose the **Vite** preset.
-2. Add the environment variable `GEMINI_API_KEY`. Optionally set `GEMINI_MODEL` to use a different Gemini model.
+2. Add the environment variable `OPENAI_API_KEY` (or `GEMINI_API_KEY` to use Gemini instead). Optionally set `OPENAI_MODEL` or `GEMINI_MODEL`.
 3. Deploy. Every push to `main` redeploys the site.
 
 ## Roadmap
