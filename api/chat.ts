@@ -15,7 +15,7 @@ export default async function handler(req: any, res: any) {
     .map((m) => ({ role: m.role === "user" ? "user" : "model", parts: [{ text: m.content.slice(0, 800) }] }));
   if (!clean.length || clean[clean.length - 1].role !== "user") return res.status(400).json({ error: "No question" });
 
-  const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+  const model = process.env.GEMINI_MODEL || "gemini-3.8-flash";
   try {
     const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
       method: "POST",
@@ -23,7 +23,7 @@ export default async function handler(req: any, res: any) {
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
         contents: clean,
-        generationConfig: { temperature: 0.3, maxOutputTokens: 400 },
+        generationConfig: { temperature: 0.3, maxOutputTokens: 2048 },
       }),
     });
     const data = await r.json();
