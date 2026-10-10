@@ -46,10 +46,17 @@ function Chat() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: next.filter((m) => m !== GREETING) }),
       });
-      if (!r.ok) throw new Error(String(r.status));
-      answer = (await r.json()).answer;
-    } catch {
-      answer = localAnswer(question);
+           const data = await r.json().catch(() => ({}));
+      if (!r.ok || !data.answer) throw new Error(data.error || `HTTP ${r.status}`);
+      answer = data.answer;
+    } catch (err) {
+      const local = ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
+      if (local) {
+        answer = localAnswer(question);
+      } else {
+        console.error("Chat API error:", err);
+        answer = `Sorry, the assistant isn't available right now. You can email Pratik at ${profile.email}.`;
+      }
     }
     setMsgs((m) => [...m, { role: "assistant", content: answer }]);
     setBusy(false);

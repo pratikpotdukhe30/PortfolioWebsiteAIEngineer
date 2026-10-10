@@ -1,7 +1,6 @@
 // Vercel serverless function: POST /api/chat
 // Set GEMINI_API_KEY in Vercel → Project → Settings → Environment Variables.
-import { SYSTEM_PROMPT } from "../src/data/knowledge";
-
+import { SYSTEM_PROMPT } from "../src/data/knowledge.js";
 type Msg = { role: "user" | "assistant"; content: string };
 
 export default async function handler(req: any, res: any) {

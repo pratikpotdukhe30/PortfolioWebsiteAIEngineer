@@ -1,4 +1,4 @@
-import { experience, now, profile, projects, skills } from "./profile";
+import { experience, now, profile, projects, skills } from "./profile.js";
 
 // The knowledge base the assistant answers from. Everything here comes from profile.ts,
 // so updating that one file updates both the website and the chat.
