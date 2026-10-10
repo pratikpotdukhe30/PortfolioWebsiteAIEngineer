@@ -17,6 +17,43 @@ const GREETING: Msg = {
     "Hi! I'm an AI assistant that knows Pratik's projects, experience and skills. Ask me anything, or pick a question below.",
 };
 
+type Theme = "light" | "dark";
+
+function useTheme() {
+  const [theme, setTheme] = useState<Theme>(() => {
+    try {
+      const saved = localStorage.getItem("theme");
+      if (saved === "light" || saved === "dark") return saved;
+    } catch { /* storage unavailable */ }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  });
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    try { localStorage.setItem("theme", theme); } catch { /* storage unavailable */ }
+  }, [theme]);
+  return { theme, toggle: () => setTheme((t) => (t === "dark" ? "light" : "dark")) };
+}
+
+function ThemeToggle() {
+  const { theme, toggle } = useTheme();
+  const toLight = theme === "dark";
+  return (
+    <button type="button" className="theme-toggle" onClick={toggle}
+      aria-label={toLight ? "Switch to light mode" : "Switch to dark mode"} title={toLight ? "Light mode" : "Dark mode"}>
+      {toLight ? (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.5" />
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+        </svg>
+      ) : (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z" />
+        </svg>
+      )}
+    </button>
+  );
+}
+
 function initials(name: string) {
   return name.split(" ").map((w) => w[0]).join("").slice(0, 2);
 }
@@ -46,13 +83,13 @@ function Chat() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: next.filter((m) => m !== GREETING) }),
       });
-           const data = await r.json().catch(() => ({}));
+      const data = await r.json().catch(() => ({}));
       if (!r.ok || !data.answer) throw new Error(data.error || `HTTP ${r.status}`);
       answer = data.answer;
     } catch (err) {
       const local = ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
       if (local) {
-        answer = localAnswer(question);
+        answer = `[Offline answer, API error: ${(err as Error).message}]\n\n${localAnswer(question)}`;
       } else {
         console.error("Chat API error:", err);
         answer = `Sorry, the assistant isn't available right now. You can email Pratik at ${profile.email}.`;
@@ -120,6 +157,7 @@ function ProjectCard({ p }: { p: Project }) {
 export default function App() {
   return (
     <div className="page">
+      <ThemeToggle />
       <header className="hero">
         {profile.photo
           ? <img className="avatar" src={profile.photo} alt={profile.name} />

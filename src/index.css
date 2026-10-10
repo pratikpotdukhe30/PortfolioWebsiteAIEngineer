@@ -29,9 +29,9 @@ p { margin: 0; }
 /* Header */
 .hero { display: grid; justify-items: center; text-align: center; gap: 6px; }
 .avatar {
-  width: 96px; height: 96px; border-radius: 50%; object-fit: cover; margin-bottom: 10px;
+  width: 148px; height: 148px; border-radius: 50%; object-fit: cover; margin-bottom: 14px;
   display: grid; place-items: center; background: var(--ink); color: var(--bg);
-  font: 600 1.9rem var(--sans); letter-spacing: -0.02em; border: 4px solid var(--surface); box-shadow: 0 0 0 1px var(--line);
+  font: 600 2.8rem var(--sans); letter-spacing: -0.02em; border: 4px solid var(--surface); box-shadow: 0 0 0 1px var(--line);
 }
 h1 { margin: 0; font-size: clamp(2rem, 5.5vw, 2.6rem); font-weight: 650; letter-spacing: -0.035em; line-height: 1.1; }
 .role { color: var(--muted); font-size: 1.05rem; }
@@ -90,3 +90,12 @@ h2 { margin: 0 0 18px; font: 500 0.78rem var(--mono); text-transform: uppercase;
 
 footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
 @media (prefers-reduced-motion: reduce) { .typing i { animation: none; } }
+
+/* Theme toggle */
+.theme-toggle {
+  position: fixed; top: calc(16px + env(safe-area-inset-top, 0px)); right: 16px; z-index: 10;
+  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer;
+  box-shadow: 0 4px 14px -6px rgba(0, 0, 0, 0.25); transition: border-color 0.2s;
+}
+.theme-toggle:hover { border-color: var(--ink); }
